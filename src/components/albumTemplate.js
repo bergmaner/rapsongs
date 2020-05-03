@@ -1,10 +1,18 @@
 import React from 'react';
+import Layout from './layout';
+import Album from './Album'
+import { Link } from 'gatsby';
 
-const AlbumTemplate = () =>{
+const AlbumTemplate = (props) =>{
 return(
-    <div>
-        AlbumPage
-    </div>
+    <Layout>
+        <Album
+        albumTitle = {props.pageContext.title} 
+        artistName = {props.pageContext.artist.name}
+        albumSummary = {props.pageContext.summary}
+        albumImage = {props.pageContext.image}
+       ><Link to = {'/'}>back</Link></Album>
+    </Layout>
 )
 }
 export default AlbumTemplate;

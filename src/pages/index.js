@@ -1,20 +1,22 @@
-import React from "react"
-import { Link,graphql } from "gatsby"
-
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import React from "react";
+import { Link,graphql } from "gatsby";
+import Album from "../components/Album";
+import Layout from "../components/layout";
 
 const IndexPage = (props) => {
   console.log(props);
   return(
   <Layout>
     {props.data.allAlbum.edges.map(edge =>(
-      <div key = {edge.node.id}>
-        <h2>{edge.node.title} - <small>{edge.node.artist.name}</small></h2>
-        <div>{edge.node.summary}</div>
+      <Album 
+      key = {edge.node.id}
+      albumSummary = {edge.node.summary}
+      albumTitle = {edge.node.title}
+      albumImage = {edge.node.image}
+      artistName = {edge.node.artist.name}
+      >
         <Link to ={`/album/${edge.node.id}`}>Join to conversation</Link>
-      </div>))}
+      </Album>))}
 
   </Layout>
   )
@@ -28,6 +30,7 @@ query MyQuery {
         id
         summary
         title
+        image
         artist {
           name
         }

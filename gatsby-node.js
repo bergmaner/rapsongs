@@ -11,6 +11,7 @@ exports.createPages = ({graphql,actions}) => {
               id
               summary
               title
+              image
               artist {
                 name
               }
