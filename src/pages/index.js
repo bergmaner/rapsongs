@@ -1,21 +1,40 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link,graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
+const IndexPage = (props) => {
+  console.log(props);
+  return(
   <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
+    {props.data.allAlbum.edges.map(edge =>(
+      <div key = {edge.node.id}>
+        <h2>{edge.node.title} - <small>{edge.node.artist.name}</small></h2>
+        <div>{edge.node.summary}</div>
+        <Link to ={`/album/${edge.node.id}`}>Join to conversation</Link>
+      </div>))}
+
   </Layout>
-)
+  )
+};
+
+export const query = graphql`
+query MyQuery {
+  allAlbum {
+    edges {
+      node {
+        id
+        summary
+        title
+        artist {
+          name
+        }
+      }
+    }
+  }
+}
+`;
 
 export default IndexPage
