@@ -1,12 +1,11 @@
 import React from "react";
 import { Link,graphql } from "gatsby";
 import Album from "../components/Album";
-import Layout from "../components/layout";
 
 const IndexPage = (props) => {
   console.log(props);
   return(
-  <Layout>
+  <section>
     {props.data.allAlbum.edges.map(edge =>(
       <Album 
       key = {edge.node.id}
@@ -18,7 +17,7 @@ const IndexPage = (props) => {
         <Link to ={`/album/${edge.node.id}`}>Join to conversation</Link>
       </Album>))}
 
-  </Layout>
+  </section>
   )
 };
 
