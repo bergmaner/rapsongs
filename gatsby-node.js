@@ -11,7 +11,17 @@ exports.createPages = ({graphql,actions}) => {
               id
               summary
               title
-              image
+              localImage {
+                childImageSharp {
+                  fixed(width: 235) {
+                    base64
+                    width
+                    height
+                    src
+                    srcSet
+                  }
+                }
+              }
               artist {
                 name
               }

@@ -12,7 +12,7 @@ const IndexPage = (props) => {
       key = {edge.node.id}
       albumSummary = {edge.node.summary}
       albumTitle = {edge.node.title}
-      albumImage = {edge.node.image}
+      albumImage = {edge.node.localImage.childImageSharp.fixed}
       artistName = {edge.node.artist.name}
       >
         <Link to ={`/album/${edge.node.id}`}>Join to conversation</Link>
@@ -30,7 +30,17 @@ query MyQuery {
         id
         summary
         title
-        image
+        localImage {
+          childImageSharp {
+            fixed(width: 235) {
+              base64
+              width
+              height
+              src
+              srcSet
+            }
+          }
+        }
         artist {
           name
         }

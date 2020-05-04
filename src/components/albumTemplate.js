@@ -10,7 +10,7 @@ return(
         albumTitle = {props.pageContext.title} 
         artistName = {props.pageContext.artist.name}
         albumSummary = {props.pageContext.summary}
-        albumImage = {props.pageContext.image}
+        albumImage = {props.pageContext.localImage.childImageSharp.fixed}
        ><Link to = {'/'}>back</Link></Album>
     </Layout>
 )
