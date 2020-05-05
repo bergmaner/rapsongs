@@ -17,7 +17,12 @@ function useAuth() {
 
             unsubscribe = firebaseInstance.auth.onAuthStateChanged(userResult => {
                 if (userResult) {
-                    setUser(userResult);
+                    firebaseInstance.getUserProfile({ userId: userResult.uid }).then(
+                     result => {
+                         setUser({...userResult, username: result.empty ? null : result.docs[0].id })
+                        }    
+                    );
+                    
                     // get user custom claims
                     /*setLoading(true);
                     Promise.all([

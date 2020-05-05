@@ -6,13 +6,16 @@ import { FirebaseContext } from '../services/Firebase';
 
 const Register = () => {
 
-    const [ formValues, setFormValues ] = useState({email: '', password: '', passwordConfirmation: ''});
+    const [ formValues, setFormValues ] = useState({
+        email: '', password: '', passwordConfirmation: '', username: ''
+    });
     const [ error, setError ] = useState('');
     const { firebase } = useContext(FirebaseContext);
     function handleSubmit(e){
         e.preventDefault();
         if( formValues.password === formValues.passwordConfirmation ){
             firebase.register({ 
+                username: formValues.username,
                 email: formValues.email,
                 password: formValues.password,
                 passwordConfirmation: formValues.passwordConfirmation
@@ -35,6 +38,7 @@ const Register = () => {
     }
     return (
         <Form onSubmit = { handleSubmit }>
+            <Input value = { formValues.username } name = "username" onChange = {handleChange} placeholder = 'username' type = 'text' required/>
             <Input value = { formValues.email } name = "email" onChange = {handleChange} placeholder = 'email' type = 'email' required/>
             <Input value = { formValues.password } name = "password" onChange = {handleChange} placeholder = 'password' type = 'password' required minLength = {6}/>
             <Input value = { formValues.passwordConfirmation } name = "passwordConfirmation" onChange = {handleChange} placeholder = 'confirm password' type = 'password' required minLength = {6}/>

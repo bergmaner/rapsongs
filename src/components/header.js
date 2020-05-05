@@ -79,7 +79,7 @@ function handleLogout(){
         <div>
           { user && user.email &&
            <UserInfo>
-             <div>Hello , {user.email}</div>
+             <div>Hello , {user.username || user.email}</div>
            <Logout onClick = {handleLogout}>Logout</Logout>
            </UserInfo>}
            { ( !user || !user.email ) && 

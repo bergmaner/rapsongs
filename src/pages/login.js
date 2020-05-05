@@ -1,4 +1,4 @@
-import React,{ useState, useContext } from 'react';
+import React,{ useState, useContext, useEffect } from 'react';
 import { FirebaseContext } from '../services/Firebase';
 import { Form } from '../components/Form';
 import { Input } from '../components/Input';
@@ -9,12 +9,15 @@ const Login = () => {
     const [ formValues, setFormValues ] = useState({email: '', password: ''});
     const [ error, setError ] = useState('');
     const { firebase } = useContext(FirebaseContext);
+
+    
     function handleSubmit(e){
         e.preventDefault();
         firebase.login({ email: formValues.email, password: formValues.password }).catch( err => {
             console.log(err);
             setError(err.message);
         });
+       
     }
 
     function handleInputChange(e){
