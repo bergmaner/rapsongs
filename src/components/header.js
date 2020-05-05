@@ -18,6 +18,12 @@ const HeaderWrapper = styled.div`
   margin-bottom: 1.45rem;
 `;
 
+const Divider = styled.span`
+margin: 0 8px;
+padding-right: 1px;
+background: #ddd;
+`;
+
 const HeaderContent = styled.div`
   margin: 0 auto;
   max-width: 960;
@@ -79,6 +85,8 @@ function handleLogout(){
            { ( !user || !user.email ) && 
            <Login>
              <Link to ='/login'>Login</Link>
+             <Divider/>
+             <Link to ='/register'>Register</Link>
           </Login>}
         </div>
     </HeaderContent>
