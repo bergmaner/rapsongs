@@ -13,6 +13,11 @@ class Firebase {
     }
   }
 
+  getComments({ albumId,onSnapshot }){
+    const albumRef = this.db.collection('albums').doc(albumId);
+    return this.db.collection('comments').where('album', '==',albumRef).onSnapshot( onSnapshot )
+  }
+
   async getUserProfile({userId}) {
     return this.db.collection('profiles').where('userId','==',userId).get();
   }
