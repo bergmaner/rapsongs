@@ -1,5 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from "./Button";
+import { Input } from "./Input";
 import styled from 'styled-components';
+
+const CommentsForm = styled.form`
+display: flex;
+justify-content: space-around;
+margin-top: 32px;
+${Input}{
+    width: 75%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+${Button}{
+    margin: auto 0;
+}
+`;
 
 const Comment = styled.div`
 >strong{
@@ -33,6 +49,10 @@ export const Comments = ({ firebase, albumId }) => {
 
     return (
     <div>
+        <CommentsForm>
+            <Input placeholder="Type your comment"/>
+            <Button>Post comment</Button>
+        </CommentsForm>
         {comments.map( (comment) => 
     <Comment key = {comment.id}>
         <strong>{comment.username}</strong>

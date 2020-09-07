@@ -4,19 +4,19 @@ import { Link } from 'gatsby';
 import { Comments } from '../components/Comments';
 import { FirebaseContext } from '../services/Firebase';
 
-const AlbumTemplate = ({pageContext}) =>{
+const AlbumTemplate = (props) =>{
     const { firebase } = useContext(FirebaseContext);
 return(
     <section>
         <Album
-        albumTitle = {pageContext.title} 
-        artistName = {pageContext.artist.name}
-        albumSummary = {pageContext.summary}
-        albumImage = {pageContext.localImage.childImageSharp.fixed}
+        albumTitle = {props.pageContext.title} 
+        artistName = {props.pageContext.artist.name}
+        albumSummary = {props.pageContext.summary}
+        albumImage = {props.pageContext.localImage.childImageSharp.fixed}
        ><Link to = {'/'}>back</Link></Album>
        {
            firebase && 
-           <Comments firebase = {firebase} albumId = {pageContext.id} />
+           <Comments firebase = {firebase} albumId = {props.pageContext.id} />
        }
         
     </section>

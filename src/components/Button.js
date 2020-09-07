@@ -6,7 +6,9 @@ color: white;
 background: #8080ff;
 border-radius: 4px;
 transition: all 0.6s;
+white-space: nowrap;
 outline:none;
+border: none;
 box-shadow: none;
 ${props => props.block ?  'display: block; width: 100%;' : ''}
 
