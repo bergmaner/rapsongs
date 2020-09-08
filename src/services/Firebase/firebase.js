@@ -29,8 +29,13 @@ class Firebase {
     })
   }
 
-  async getUserProfile({ userId }) {
-    return this.db.collection("profiles").where("userId", "==", userId).get()
+  getUserProfile({ userId, onSnapshot }) {
+    
+    return this.db
+    .collection("profiles")
+    .where("userId", "==", userId)
+    .limit(1)
+    .onSnapshot(onSnapshot)
   }
 
   async register({ email, password, username }) {
@@ -38,8 +43,9 @@ class Firebase {
       email,
       password
     )
-    return this.db.collection("profiles").doc(username).set({
-      userId: newUser.user.uid,
+    const createProfileCallable =  this.functions.httpsCallable('createProfile');
+    return createProfileCallable({
+      username
     })
   }
 

@@ -3,11 +3,49 @@ const admin = require("firebase-admin")
 
 admin.initializeApp()
 
+exports.createProfile = functions.https.onCall(async (data, context) => {
+  checkAuthentication(context)
+  dataValidate(data, {
+    username: "string",
+  })
+
+  const userProfile = await admin
+    .firestore()
+    .collection("profiles")
+    .where("userId", "==", context.auth.uid)
+    .limit(1)
+    .get()
+
+    if(!userProfile.empty){
+      throw new functions.https.HttpsError(
+        "already-exists",
+        "This user already has a profile"
+      )
+    }
+
+  const profile = await admin
+    .firestore()
+    .collection("profiles")
+    .doc(data.username)
+    .get()
+  if (profile.exists) {
+    throw new functions.https.HttpsError(
+      "already-exists",
+      "This username already exists"
+    )
+  }
+
+  return admin.firestore().collection('profiles').doc(data.username).set({
+    userId: context.auth.uid
+  })
+
+})
+
 exports.postComment = functions.https.onCall(async (data, context) => {
-  checkAuthentication(context);
-  dataValidate(data,{
-    albumId: 'string',
-    content: 'string'
+  checkAuthentication(context)
+  dataValidate(data, {
+    albumId: "string",
+    content: "string",
   })
 
   const db = admin.firestore()
@@ -24,20 +62,28 @@ exports.postComment = functions.https.onCall(async (data, context) => {
   })
 })
 
-function dataValidate(data,validKeys){
-  if(Object.keys(data).length !== Object.keys(validKeys).length){
-    throw new functions.https.HttpsError('invalid-argument', 'Invalid number of properties');
-  }
-  else{
-    for(let key in data){
-      if(!validKeys[key] || typeof(data[key]) !== validKeys[key])
-      throw new functions.https.HttpsError('invalid-argument', 'Invalid type of data');
+function dataValidate(data, validKeys) {
+  if (Object.keys(data).length !== Object.keys(validKeys).length) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "Invalid number of properties"
+    )
+  } else {
+    for (let key in data) {
+      if (!validKeys[key] || typeof data[key] !== validKeys[key])
+        throw new functions.https.HttpsError(
+          "invalid-argument",
+          "Invalid type of data"
+        )
     }
   }
 }
 
 function checkAuthentication(context) {
-  if(!context.auth){
-    throw new functions.https.HttpsError('unauthenticated', 'You must be signed to comment');
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "You must be signed to comment"
+    )
   }
 }
