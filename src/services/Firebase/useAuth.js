@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { navigate } from "gatsby";
 import getFirebaseInstance from "./firebase"
 import loadFirebaseDependencies from "./loadFirebaseDependencies"
 
@@ -20,6 +21,7 @@ function useAuth() {
                     firebaseInstance.getUserProfile({ userId: userResult.uid }).then(
                      result => {
                          setUser({...userResult, username: result.empty ? null : result.docs[0].id })
+                        navigate('/');
                         }    
                     );
                     

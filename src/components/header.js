@@ -29,6 +29,7 @@ const HeaderContent = styled.div`
   max-width: 960;
   padding: 1.45rem 1.0875rem;
   display: flex;
+  align-items: center;
   >h1{
     margin: 0;
     flex-grow: 1;
@@ -59,7 +60,8 @@ const HeaderContent = styled.div`
 
   const UserInfo = styled.div`
   text-align: right;
-  color: white;`;
+  color: white;
+  font-size: 16px;`;
 
 const Header = ({ siteTitle }) => {
   const { firebase, user } = useContext(FirebaseContext);

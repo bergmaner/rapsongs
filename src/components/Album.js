@@ -37,10 +37,10 @@ padding: 0px 10px;
 
 const AlbumImage = styled.div`
 max-width: 235px;
-display: flex;
-align-items: center;
+margin-top: 65px;
 img {
 max-width: 235px;
+margin: 0;
 }
 
 `;

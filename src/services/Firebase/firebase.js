@@ -18,6 +18,14 @@ class Firebase {
     return this.db.collection('comments').where('album', '==',albumRef).onSnapshot( onSnapshot )
   }
 
+  async postComment({content, albumId}) {
+    const postCommentCallable = this.functions.httpsCallable('postComment');
+    return postCommentCallable({
+      content,
+      albumId
+    })
+  }
+
   async getUserProfile({userId}) {
     return this.db.collection('profiles').where('userId','==',userId).get();
   }
