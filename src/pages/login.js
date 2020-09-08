@@ -1,5 +1,4 @@
 import React,{ useState, useContext } from 'react';
-import { navigate } from "gatsby";
 import { FirebaseContext } from '../services/Firebase';
 import { Form } from '../components/Form';
 import { Input } from '../components/Input';

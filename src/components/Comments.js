@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Button } from "./Button"
 import { Input } from "./Input"
+import moment from "moment"
 import styled from "styled-components"
 
 const CommentsForm = styled.form`
@@ -16,6 +17,15 @@ const CommentsForm = styled.form`
     margin: auto 0;
   }
 `
+
+const Details = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span{
+      color: rgba(0,0,0,0.4);
+  }
+`;
 
 const Comment = styled.div`
   > strong {
@@ -53,9 +63,10 @@ export const Comments = ({ firebase, albumId }) => {
     e.preventDefault()
     console.log(text)
     firebase.postComment({
-        content: text,
-        albumId
+      content: text,
+      albumId,
     })
+    setText("")
   }
 
   return (
@@ -73,7 +84,12 @@ export const Comments = ({ firebase, albumId }) => {
       </CommentsForm>
       {comments.map(comment => (
         <Comment key={comment.id}>
-          <strong>{comment.username}</strong>
+          <Details>
+            <strong>{comment.username}</strong>
+            <span>
+              {moment(comment.dateCreated.toDate()).format("hh:mm DD MMM YYYY")}
+            </span>
+          </Details>
           <div>{comment.content}</div>
         </Comment>
       ))}

@@ -21,7 +21,8 @@ function useAuth() {
                     firebaseInstance.getUserProfile({ userId: userResult.uid }).then(
                      result => {
                          setUser({...userResult, username: result.empty ? null : result.docs[0].id })
-                        navigate('/');
+                         if(window.location.pathname === "/login" ||  window.location.pathname === "/register")
+                          navigate('/');
                         }    
                     );
                     
