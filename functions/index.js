@@ -1,5 +1,6 @@
 const functions = require("firebase-functions")
 const admin = require("firebase-admin")
+const mimeTypes = require('mimetypes');
 
 admin.initializeApp()
 
@@ -23,6 +24,33 @@ exports.createArtist = functions.https.onCall(async (data,context) => {
   })
 
 })
+
+exports.createAlbum = functions.https.onCall(async (data, context) => {
+  checkAuthentication(context, true);
+  dataValidate(data, {
+    albumName: 'string',
+    artistId: 'string',
+    image: 'string',
+    summary: 'string'
+  });
+  const mimeType = data.image.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/)[1];
+const base64EncodedImageString = data.image.replace(/^data:image\/\w+;base64,/, '');
+const imageBuffer = new Buffer(base64EncodedImageString, 'base64');
+
+const filename = `images/${data.albumName}.${mimeTypes.detectExtension(mimeType)}`;
+const file = admin.storage().bucket().file(filename);
+await file.save(imageBuffer, { contentType: 'image/jpeg' });
+const fileUrl = await file.getSignedUrl({ action: 'read', expires: '03-09-2491' }).then(urls => urls[0]);
+
+return admin.firestore().collection("albums").add({
+  title: data.albumName,
+  image: fileUrl,
+  summary: data.summary,
+  artist: admin.firestore().collection("artists").doc(data.artistId)
+})
+
+});
+
 
 exports.createProfile = functions.https.onCall(async (data, context) => {
   checkAuthentication(context)

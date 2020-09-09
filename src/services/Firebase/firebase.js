@@ -56,6 +56,21 @@ class Firebase {
     })
   }
 
+  async getArtists(){
+    return this.db.collection("artists").get();
+  }
+
+  async createAlbum({albumName, artistId, image, summary}){
+    const createAlbumCallable = this.functions.httpsCallable('createAlbum');
+    return createAlbumCallable({
+      albumName,
+      artistId,
+      image,
+      summary
+    })
+  }
+
+
   async login({ email, password }) {
     return this.auth.signInWithEmailAndPassword(email, password);
   }

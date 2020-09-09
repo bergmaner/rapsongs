@@ -84,9 +84,9 @@ function handleLogout(){
              {
               user && user.isAdmin && 
                <>
-                <StyledLink to="createArtist">Create Artist</StyledLink>
+                <StyledLink to="/createArtist">Create Artist</StyledLink>
                 <Divider/>
-                <StyledLink to="createAlbum">Create Album</StyledLink>
+                <StyledLink to="/createAlbum">Create Album</StyledLink>
                 <Divider/>
                </>
              }
