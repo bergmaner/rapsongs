@@ -9,7 +9,7 @@ import "./layout.css";
 const LayoutContainer = styled.div`
 margin: 0 auto;
 max-width: 960px;
-min-height: calc(100vh - 122px);
+min-height: calc(100vh - 132px);
 padding: 0 1.0875rem 1.45rem;
 display: flex;
 flex-direction: column;

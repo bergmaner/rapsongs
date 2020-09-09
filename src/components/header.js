@@ -24,6 +24,15 @@ padding-right: 1px;
 background: #ddd;
 `;
 
+const StyledLink = styled(Link)`
+color: white;
+text-decoration: none;
+&:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+`
+
 const HeaderContent = styled.div`
   margin: 0 auto;
   max-width: 960;
@@ -32,10 +41,10 @@ const HeaderContent = styled.div`
   align-items: center;
   >h1{
     margin: 0;
+    height: 54px;
     flex-grow: 1;
-    >a{
-      color: white;
-      text-decoration: none;
+    >a:hover{
+     text-decoration: none;
     }
     >div{
       margin: auto 0;
@@ -46,16 +55,6 @@ const HeaderContent = styled.div`
 
   const Login = styled.div`
     margin: auto 0;
-    a
-    {
-      color: white;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-    }
-    
   `;
 
   const UserInfo = styled.div`
@@ -74,21 +73,30 @@ function handleLogout(){
   <HeaderWrapper>
     <HeaderContent>
       <h1>
-        <Link to="/">
+        <StyledLink to="/">
           {siteTitle}
-        </Link>
+        </StyledLink>
       </h1>
         <div>
           { user && user.email &&
            <UserInfo>
              <div>Hello , {user.username || user.email}</div>
+             {
+              user && user.isAdmin && 
+               <>
+                <StyledLink to="createArtist">Create Artist</StyledLink>
+                <Divider/>
+                <StyledLink to="createAlbum">Create Album</StyledLink>
+                <Divider/>
+               </>
+             }
            <Logout onClick = {handleLogout}>Logout</Logout>
            </UserInfo>}
            { ( !user || !user.email ) && 
            <Login>
-             <Link to ='/login'>Login</Link>
+             <StyledLink to ='/login'>Login</StyledLink>
              <Divider/>
-             <Link to ='/register'>Register</Link>
+             <StyledLink to ='/register'>Register</StyledLink>
           </Login>}
         </div>
     </HeaderContent>

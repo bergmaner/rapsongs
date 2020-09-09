@@ -3,6 +3,27 @@ const admin = require("firebase-admin")
 
 admin.initializeApp()
 
+exports.createArtist = functions.https.onCall(async (data,context) => {
+  checkAuthentication(context);
+  dataValidate(data, {
+    artistName: "string",
+  })
+
+  const artist = await admin.firestore().collection('artists').where("name","==",data.artistName).limit(1).get()
+
+  if(!artist.empty){
+    throw new functions.https.HttpsError(
+      "already-exists",
+      "This artist already exists"
+    )
+  }
+
+  return admin.firestore().collection("artists").add({
+    name: data.artistName
+  })
+
+})
+
 exports.createProfile = functions.https.onCall(async (data, context) => {
   checkAuthentication(context)
   dataValidate(data, {
@@ -33,6 +54,12 @@ exports.createProfile = functions.https.onCall(async (data, context) => {
       "already-exists",
       "This username already exists"
     )
+  }
+
+  const user = await admin.auth().getUser(context.auth.uid);
+  if(user.email === functions.config().accounts.admin){
+    console.log('kk')
+    await admin.auth().setCustomUserClaims(context.auth.uid, {admin: true});
   }
 
   return admin.firestore().collection('profiles').doc(data.username).set({
@@ -79,11 +106,17 @@ function dataValidate(data, validKeys) {
   }
 }
 
-function checkAuthentication(context) {
+function checkAuthentication(context, admin) {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",
       "You must be signed to comment"
+    )
+  }
+  else if(!context.auth.token.admin && admin){
+    throw new functions.https.HttpsError(
+      "permission-denied",
+      "You must be admin to use this feature"
     )
   }
 }

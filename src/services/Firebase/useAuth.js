@@ -21,10 +21,15 @@ function useAuth() {
           publicProfileUnsubscribe = firebaseInstance.getUserProfile({
             userId: userResult.uid,
             onSnapshot: result => {
-              setUser({
-                ...userResult,
-                username: result.empty ? null : result.docs[0].id,
-              })
+                firebaseInstance.auth.currentUser.getIdTokenResult(true).then(
+                    token=>{
+                        setUser({
+                            ...userResult,
+                            isAdmin: token.claims.admin,
+                            username: result.empty ? null : result.docs[0].id,
+                          })
+                    })
+              
             },
           })
 

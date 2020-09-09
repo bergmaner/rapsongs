@@ -49,8 +49,15 @@ class Firebase {
     })
   }
 
+  async createArtist({artistName}){
+    const createArtistCallable = this.functions.httpsCallable('createArtist');
+    return createArtistCallable({
+      artistName
+    })
+  }
+
   async login({ email, password }) {
-    return this.auth.signInWithEmailAndPassword(email, password)
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
   async logout() {
