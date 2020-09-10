@@ -14,9 +14,9 @@ if(typeof window !== 'undefined'){
 }
 
 const CreateAlbum = () => {
-  const [albumName, setAlbumName] = useState("")
-  const [artists, setArtists] = useState([])
-  const { firebase } = useContext(FirebaseContext)
+  const [albumName, setAlbumName] = useState("");
+  const [artists, setArtists] = useState([]);
+  const { firebase } = useContext(FirebaseContext) || {};
   const [image, setImage] = useState('');
   const [artistId, setArtistId] = useState('');
   const [summary, setSummary] = useState('');

@@ -5,7 +5,7 @@ import { Comments } from '../components/Comments';
 import { FirebaseContext } from '../services/Firebase';
 
 const AlbumTemplate = (props) =>{
-    const { firebase } = useContext(FirebaseContext);
+    const { firebase } = useContext(FirebaseContext) || {};
 return(
     <section>
         <Album

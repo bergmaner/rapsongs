@@ -10,7 +10,7 @@ const Register = () => {
         email: '', password: '', passwordConfirmation: '', username: ''
     });
     const [ error, setError ] = useState('');
-    const { firebase } = useContext(FirebaseContext);
+    const { firebase } = useContext(FirebaseContext) || {};
     function handleSubmit(e){
         e.preventDefault();
         if( formValues.password === formValues.passwordConfirmation ){

@@ -8,7 +8,7 @@ const Login = () => {
 
     const [ formValues, setFormValues ] = useState({email: '', password: ''});
     const [ error, setError ] = useState('');
-    const { firebase } = useContext(FirebaseContext);
+    const { firebase } = useContext(FirebaseContext) || {};
 
     
     function handleSubmit(e){

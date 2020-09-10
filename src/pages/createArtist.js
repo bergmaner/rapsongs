@@ -7,7 +7,7 @@ import { FirebaseContext } from "../services/Firebase"
 const CreateArtist = () => {
 
   const [artistName, setArtistName] = useState("")
-  const { firebase } = useContext(FirebaseContext)
+  const { firebase } = useContext(FirebaseContext) || {};
   const [succes, setSucces] = useState(false)
 
   const handleSubmit = (e) => {

@@ -63,7 +63,7 @@ const HeaderContent = styled.div`
   font-size: 16px;`;
 
 const Header = ({ siteTitle }) => {
-  const { firebase, user } = useContext(FirebaseContext);
+  const { firebase, user } = useContext(FirebaseContext) || {};
   console.log(user);
 function handleLogout(){
   firebase.logout().then( () => navigate('/login') );
