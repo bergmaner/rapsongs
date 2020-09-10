@@ -16,7 +16,8 @@
   "dependencies": {
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.6.1",
-    "mimetypes": "^0.1.1"
+    "mimetypes": "^0.1.1",
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "eslint": "^5.12.0",

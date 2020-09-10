@@ -1,6 +1,7 @@
-const functions = require("firebase-functions")
-const admin = require("firebase-admin")
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 const mimeTypes = require('mimetypes');
+const rp = require('request-promise');
 
 admin.initializeApp()
 
@@ -47,6 +48,8 @@ return admin.firestore().collection("albums").add({
   image: fileUrl,
   summary: data.summary,
   artist: admin.firestore().collection("artists").doc(data.artistId)
+}).then(() => {
+  return rp.post('https://api.netlify.com/build_hooks/5f5a23c9d49ba916ea20e5b2')
 })
 
 });
